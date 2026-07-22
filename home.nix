@@ -185,6 +185,12 @@
   #
   #  /etc/profiles/per-user/tvrtko-majstorovic/etc/profile.d/hm-session-vars.sh
   #
+  # Binaries from `cargo install` (e.g. neovide built from source) land here.
+  # $HOME is expanded — sessionPath quotes entries in a context that allows it.
+  home.sessionPath = [
+    "$HOME/.cargo/bin"
+  ];
+
   home.sessionVariables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
