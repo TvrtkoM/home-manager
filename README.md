@@ -1,6 +1,6 @@
 # My Nix home manager
 
-## Before installing Nix (optionsl)
+## Before installing Nix (optional)
 
 If system parttion is too small we need to mount new folder `/home/nix` onto `/nix` presuming `/home` is on another
 partition.
