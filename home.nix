@@ -36,6 +36,8 @@
     # '')
 
     ripgrep
+    neovim
+    lazygit
     nb
     fd
     fzf
