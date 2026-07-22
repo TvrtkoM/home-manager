@@ -48,7 +48,6 @@
     tree-sitter
     nerd-fonts.jetbrains-mono
     tinty
-    ghostty
 
     nodejs_24
 
