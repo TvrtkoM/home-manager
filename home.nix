@@ -44,6 +44,7 @@
     fzf
     htop
     jq
+    xclip
     tmux
     pass
     tree-sitter
