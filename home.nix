@@ -205,10 +205,13 @@
   #
   #  /etc/profiles/per-user/tvrtko-majstorovic/etc/profile.d/hm-session-vars.sh
   #
-  # Binaries from `cargo install` (e.g. neovide built from source) land here.
   # $HOME is expanded — sessionPath quotes entries in a context that allows it.
   home.sessionPath = [
+    # Binaries from `cargo install`
     "$HOME/.cargo/bin"
+    # pipx, pip --user, and anything else following the XDG user-binary convention.
+    "$HOME/.local/bin"
+    "$HOME/bin"
   ];
 
   home.sessionVariables = {
