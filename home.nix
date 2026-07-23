@@ -38,6 +38,7 @@
     ripgrep
     neovim
     lazygit
+    starship
     nb
     fd
     fzf
@@ -85,7 +86,7 @@
 
     oh-my-zsh = {
       enable = true;
-      theme = "robbyrussell";
+      theme = "";
       plugins = [
         "git"
         "fzf"
@@ -124,6 +125,16 @@
       "dist/"
       "**/.claude/settings.local.json"
     ];
+  };
+
+  programs.starship = {
+    enable = true;
+    settings = {
+      add_newline = false;
+      nix_shell = {
+        symbol = "❄ ";
+      };
+    };
   };
 
   programs.fzf = {
