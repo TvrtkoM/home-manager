@@ -61,6 +61,8 @@
     nixfmt
 
     luarocks
+
+    direnv
   ];
 
   # Makes fonts from home.packages visible to fontconfig by writing
@@ -158,6 +160,12 @@
       bind -T copy-mode-vi MouseDragEnd1Pane send -X copy-pipe-and-cancel "xclip -i -selection clipboard"
       bind -T copy-mode-vi Enter             send -X copy-pipe-and-cancel "xclip -i -selection clipboard"
     '';
+  };
+
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+    enableZshIntegration = true;
   };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
