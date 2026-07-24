@@ -36,9 +36,21 @@ home-manager switch
 
 ## Cleaning up nix store
 
+`home-manager expire-generations "-30 days"`
 `nix-collect-garbage -d` will free up things nothing reference, but if there are leftover `result` symlinks or old
 `nix develop` shells - this won't get freed.
 
 Run `nix-store --gc --print-roots | grep -v /proc/` - shows what's holding on.
 
 `nix-collect-garbage` without `-d` deletes non active shell packages.
+
+## Updating flake
+
+`nix flake update` rewrites `flake.lock`. Ater, run `home-manager switch`.
+
+## Rolling back to older generation if `switch` breaks something
+
+```bash
+home-manager generations # list generations
+/nix/store/...-home-manager-generation/activate # run this to activate specific generation
+```
