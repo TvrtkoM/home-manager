@@ -98,11 +98,13 @@
 
     # initialization commands
     initContent = ''
-      # Single-user Nix install: nothing at the system level puts Nix on PATH.
-      # The Nix installer appends this to ~/.zshrc, but Home Manager owns that
-      # file now and regenerates it, so it has to live here to survive a switch.
-      if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
-        . "$HOME/.nix-profile/etc/profile.d/nix.sh"
+      # Single-user Nix install: nothing at the system level puts Nix on PATH,
+      # and ~/.profile (which used to) is gone, so this has to source nix.sh.
+      if [ -z "''${__NIX_PROFILE_SOURCED-}" ]; then
+        export __NIX_PROFILE_SOURCED=1
+        if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
+          . "$HOME/.nix-profile/etc/profile.d/nix.sh"
+        fi
       fi
 
       tinty init
