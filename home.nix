@@ -52,6 +52,10 @@
     tinty
 
     nodejs_24
+    rustup
+
+    basedpyright
+    ruff
 
     # language servers and formatters
     vtsls
