@@ -1,5 +1,30 @@
 { config, pkgs, ... }:
 
+let
+  # laravel-ls: Laravel language server (Go). Not in nixpkgs, so built here.
+  laravel-ls = pkgs.buildGoModule rec {
+    pname = "laravel-ls";
+    version = "0.1.0";
+    src = pkgs.fetchFromGitHub {
+      owner = "laravel-ls";
+      repo = "laravel-ls";
+      rev = "v${version}";
+      hash = "sha256-RR3qYi8Lyx+z+KmpQj456P5youINDxQzfv9cyhrywEs=";
+    };
+    # It bundles tree-sitter grammars whose C sources live outside the imported
+    # Go package; `go mod vendor` strips them and cgo fails. proxyVendor keeps
+    # the full module cache instead (and changes vendorHash).
+    proxyVendor = true;
+    vendorHash = "sha256-fWbB4FclmSnfQxKFetn5RCPY1jlsm7PeO3VFAZresr4=";
+    subPackages = [ "cmd/laravel-ls" ];
+    ldflags = [
+      "-s"
+      "-w"
+      "-X main.version=${version}"
+    ];
+    meta.mainProgram = "laravel-ls";
+  };
+in
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -53,6 +78,12 @@
 
     nodejs_24
     rustup
+
+    php84
+    php84Packages.composer
+    php84Packages.php-cs-fixer # PHP formatter (conform runs `php-cs-fixer`)
+    intelephense # PHP LSP (unfree — whitelisted in flake.nix)
+    laravel-ls # Laravel LSP for blade (defined in the let block)
 
     basedpyright
     ruff
@@ -218,6 +249,9 @@
     # pipx, pip --user, and anything else following the XDG user-binary convention.
     "$HOME/.local/bin"
     "$HOME/bin"
+    # Binaries from `composer global require` (e.g. the `laravel` installer).
+    # COMPOSER_HOME defaults to XDG ~/.config/composer, so global bins land here.
+    "$HOME/.config/composer/vendor/bin"
   ];
 
   home.sessionVariables = {

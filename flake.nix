@@ -13,7 +13,15 @@
     { nixpkgs, home-manager, ... }:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      # Built with `import` (not legacyPackages) so we can attach a config:
+      # `inherit pkgs` below bypasses the `nixpkgs.config` HM module option, so
+      # unfree has to be whitelisted here. Predicate = only intelephense, rather
+      # than a blanket allowUnfree.
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfreePredicate =
+          pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "intelephense" ];
+      };
     in
     {
       homeConfigurations."tvrtko-majstorovic" = home-manager.lib.homeManagerConfiguration {
