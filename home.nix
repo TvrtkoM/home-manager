@@ -79,7 +79,11 @@ in
     nodejs_24
     rustup
 
-    php84
+    (php84.buildEnv {
+      extraConfig = ''
+        memory_limit = 1G
+      '';
+    })
     php84Packages.composer
     php84Packages.php-cs-fixer # PHP formatter (conform runs `php-cs-fixer`)
     intelephense # PHP LSP (unfree — whitelisted in flake.nix)
