@@ -1,6 +1,12 @@
 { config, pkgs, ... }:
 
 let
+  php = pkgs.php84.buildEnv {
+    extraConfig = ''
+      memory_limit = 1G
+    '';
+  };
+
   # laravel-ls: Laravel language server (Go). Not in nixpkgs, so built here.
   laravel-ls = pkgs.buildGoModule rec {
     pname = "laravel-ls";
@@ -79,13 +85,9 @@ in
     nodejs_24
     rustup
 
-    (php84.buildEnv {
-      extraConfig = ''
-        memory_limit = 1G
-      '';
-    })
-    php84Packages.composer
-    php84Packages.php-cs-fixer # PHP formatter (conform runs `php-cs-fixer`)
+    php
+    php.packages.composer
+    php.packages.php-cs-fixer # PHP formatter (conform runs `php-cs-fixer`)
     intelephense # PHP LSP (unfree — whitelisted in flake.nix)
     laravel-ls # Laravel LSP for blade (defined in the let block)
 
