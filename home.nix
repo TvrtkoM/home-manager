@@ -98,6 +98,8 @@ in
     vtsls
     lua-language-server
     vscode-langservers-extracted
+    tailwindcss-language-server
+    emmet-language-server
     prettierd
     nixd
     nixfmt
