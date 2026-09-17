@@ -90,6 +90,7 @@ in
     php.packages.php-cs-fixer # PHP formatter (conform runs `php-cs-fixer`)
     intelephense # PHP LSP (unfree — whitelisted in flake.nix)
     laravel-ls # Laravel LSP for blade (defined in the let block)
+    frankenphp
 
     basedpyright
     ruff
