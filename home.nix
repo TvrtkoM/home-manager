@@ -102,6 +102,7 @@ in
     tailwindcss-language-server
     emmet-language-server
     prettierd
+    blade-formatter
     nixd
     nixfmt
 
