@@ -101,6 +101,7 @@ in
     vscode-langservers-extracted
     tailwindcss-language-server
     emmet-language-server
+    vue-language-server
     prettierd
     blade-formatter
     nixd
