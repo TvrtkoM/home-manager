@@ -94,6 +94,7 @@ in
 
     basedpyright
     ruff
+    uv
 
     # language servers and formatters
     vtsls
