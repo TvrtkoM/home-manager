@@ -140,6 +140,7 @@ in
       plugins = [
         "git"
         "fzf"
+        "pass"
       ];
     };
 
