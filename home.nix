@@ -156,6 +156,9 @@ in
       fi
 
       tinty init
+
+      # using xclip instead wl-copy for pass
+      pass() { WAYLAND_DISPLAY= command pass "$@" }
     '';
   };
 
