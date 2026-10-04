@@ -61,10 +61,6 @@
         "fzf"
       ];
     };
-
-    initContent = ''
-      tinty init
-    '';
   };
 
   programs.git = {
