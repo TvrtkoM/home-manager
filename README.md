@@ -1,5 +1,21 @@
 # My Nix home manager
 
+Two configurations live in this repo; the config names match the usernames, so a plain `home-manager switch` picks the
+right one on each machine:
+
+| Machine                | Config name          | Entry point       |
+| ---------------------- | -------------------- | ----------------- |
+| Linux (personal)       | `tvrtko-majstorovic` | `hosts/linux.nix` |
+| MacBook (work, Apple Silicon) | `tvrtkomajstorovic`  | `hosts/mac.nix`   |
+
+Shared config lives in `modules/` (`common.nix`, `php.nix`); each host file imports what it needs.
+
+On the Mac, Nix has to be the multi-user install (e.g. the Determinate Systems installer, which enables flakes). Then:
+
+```bash
+nix run home-manager/master -- switch --flake .#tvrtkomajstorovic
+```
+
 ## Before installing Nix (optional)
 
 If system parttion is too small we need to mount new folder `/home/nix` onto `/nix` presuming `/home` is on another

@@ -1,5 +1,5 @@
 {
-  description = "Home Manager configuration of tvrtko-majstorovic";
+  description = "Home Manager configurations of tvrtko-majstorovic";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
@@ -12,27 +12,32 @@
   outputs =
     { nixpkgs, home-manager, ... }:
     let
-      system = "x86_64-linux";
       # Built with `import` (not legacyPackages) so we can attach a config:
       # `inherit pkgs` below bypasses the `nixpkgs.config` HM module option, so
       # unfree has to be whitelisted here. Predicate = only intelephense, rather
       # than a blanket allowUnfree.
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfreePredicate =
-          pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "intelephense" ];
-      };
+      mkPkgs =
+        system:
+        import nixpkgs {
+          inherit system;
+          config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "intelephense" ];
+        };
     in
     {
-      homeConfigurations."tvrtko-majstorovic" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+      # Config names match the usernames, so a plain `home-manager switch`
+      # picks the right one on each machine.
+      homeConfigurations = {
+        # Personal Linux machine.
+        "tvrtko-majstorovic" = home-manager.lib.homeManagerConfiguration {
+          pkgs = mkPkgs "x86_64-linux";
+          modules = [ ./hosts/linux.nix ];
+        };
 
-        # Specify your home configuration modules here, for example,
-        # the path to your home.nix.
-        modules = [ ./home.nix ];
-
-        # Optionally use extraSpecialArgs
-        # to pass through arguments to home.nix
+        # Work MacBook (Apple Silicon).
+        "tvrtkomajstorovic" = home-manager.lib.homeManagerConfiguration {
+          pkgs = mkPkgs "aarch64-darwin";
+          modules = [ ./hosts/mac.nix ];
+        };
       };
     };
 }
