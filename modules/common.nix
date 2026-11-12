@@ -29,6 +29,7 @@
     prettierd
     nixd
     nixfmt
+    tree-sitter-grammars.tree-sitter-sql
 
     luarocks
 
