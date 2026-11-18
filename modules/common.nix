@@ -24,12 +24,15 @@
     vtsls
     lua-language-server
     vscode-langservers-extracted
+    typescript-language-server
     tailwindcss-language-server
     vue-language-server
     prettierd
     nixd
     nixfmt
     tree-sitter-grammars.tree-sitter-sql
+
+    angular-language-server
 
     luarocks
 
@@ -52,6 +55,13 @@
 
     shellAliases = {
     };
+
+    # Angular CLI can't append this itself because ~/.zshrc is a read-only Nix store symlink.
+    initContent = ''
+      if command -v ng >/dev/null; then
+        source <(ng completion script)
+      fi
+    '';
 
     oh-my-zsh = {
       enable = true;
@@ -122,6 +132,7 @@
   home.file.".npmrc".text = ''
     min-release-age=3
     ignore-scripts=true
+    prefix=${config.home.homeDirectory}/.local
   '';
 
   home.sessionPath = [
